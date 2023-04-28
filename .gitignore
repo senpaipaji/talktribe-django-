@@ -1,0 +1,16 @@
+# Django stuff
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+# Local settings
+*.env
+*.sqlite3
+
+# Logs and media
+*.log
+/media
+
+# Dependencies
+venv
