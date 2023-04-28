@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Room,Topic,User
+from .models import *
 from .forms import *
 
 def loginPage(request):
@@ -73,11 +73,32 @@ def home(request):
 
 def room(req,primarykey):
     room = Room.objects.get(id=primarykey)
+    if req.method == 'POST':
+        message= Message.objects.create(
+            user=req.user,
+            room=room,
+            body=req.POST.get('message'),
+        )
+        room.participants.add(req.user)
+        return redirect('room',primarykey)
+    room_messages = room.message_set.all().order_by('-created')  
+    participents = room.participants.all()
     context = {
         'room' : room,
+        'room_messages':room_messages,
+        'participants':participents
     }
     return render(req,'base/room.html',context)
 # Create your views here.
+
+@login_required(login_url="login")
+def delete_message(request,pk):
+    message = Message.objects.get(id=pk)
+    if request.method == 'POST':
+        message.delete()
+        return redirect('home')
+        
+    return render(request,'base/delete.html',{'obj' : message})
 
 @login_required(login_url="login")
 def create_room(req):       
