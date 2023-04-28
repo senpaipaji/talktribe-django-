@@ -64,17 +64,27 @@ def home(request):
         Q(name__icontains = q)
     )
     topics = Topic.objects.all()
-    activites = Message.objects.filter(
+    room_message = Message.objects.filter(
         Q(room__topic__name__icontains=q)
     )
     context = {
         'room_count':rooms.count(),
         'rooms':rooms,
         'topics':topics,
-        'activities':activites,
+        'room_message':room_message,
     }
     return render(request,'base/home.html',context)
-
+def user(request,pk):
+    user = User.objects.get(id=pk)
+    topics = Topic.objects.all()
+    rooms = user.room_set.all()
+    room_message = user.message_set.all()
+    context = {
+        'rooms':rooms,
+        'topics':topics,
+        'room_message':room_message,
+    }
+    return render(request,'base/user_page.html',context)
 def room(req,primarykey):
     room = Room.objects.get(id=primarykey)
     if req.method == 'POST':
