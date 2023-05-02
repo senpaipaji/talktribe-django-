@@ -118,32 +118,48 @@ def delete_message(request,pk):
     return render(request,'base/delete.html',{'obj' : message})
 
 @login_required(login_url="login")
-def create_room(req):       
+def create_room(req):      
+    toggle = 'Create' 
     form = RoomForm()
+    topics = Topic.objects.all()
     if req.method == "POST":
-        form = RoomForm(req.POST)
-        if form.is_valid():
-            print(f"form = {form}")
-            form.save()
-            return redirect('home')
-        
+        topic_name = req.POST.get('topic')
+        topic,created = Topic.objects.get_or_create(name=topic_name)
+        Room.objects.create(
+            host=req.user,
+            topic=topic,
+            name=req.POST.get('name'),
+            description=req.POST.get('description'),
+        )
+        return redirect('home')
+    
     context = {
+        'type':toggle,
+        'topics':topics,
         'form' : form
     }
     return render(req,'base/room_form.html',context) 
 
 @login_required(login_url="login")
 def update_room(req,pk):
+    toggle = 'Update' 
     room = Room.objects.get(id = pk)
+    topics = Topic.objects.all()
     if req.user == room.host:
         form = RoomForm(instance=room)
         if req.method == 'POST':
-            form = RoomForm(req.POST,instance=room)
-            if form.is_valid():
-                form.save()
-                return redirect('home')
+            topic_name = req.POST.get('topic')
+            topic,created = Topic.objects.get_or_create(name=topic_name)
+            room.topic = topic
+            room.name = req.POST.get('name')
+            room.description = req.POST.get('description')
+            room.save()
+            return redirect('home')
         context={
-            'form' : form
+            'type':toggle,
+            'topics':topics,
+            'form' : form,
+            'room':room
         }
         return render(req,'base/room_form.html',context)
     else: 
