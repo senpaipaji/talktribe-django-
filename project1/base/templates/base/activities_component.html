@@ -1,5 +1,12 @@
-{% for message in room_message %}
-<div class="activities__box">
+
+<div class="activities">
+  <div class="activities__header">
+    <h2>Recent Activities</h2>
+  </div>
+
+  {% for message in room_message %}
+
+  <div class="activities__box">
     <div class="activities__boxHeader roomListRoom__header">
       <a href="profile.html" class="roomListRoom__author">
         <div class="avatar avatar--small">
@@ -30,16 +37,16 @@
       </div>
       {% endif %}
     </div>
-    
+
     <div class="activities__boxContent">
       <p>
-        replied to post “<a href="{% url 'room' message.room.id %}">{{message.room.name}}</a
+        replied to post “<a href="{% url 'room' message.room.id %}"
+          >{{message.room.name}}</a
         >”
       </p>
-      <div class="activities__boxRoomContent">
-        {{message.body}}
-      </div>
+      <div class="activities__boxRoomContent">{{message.body}}</div>
     </div>
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
 

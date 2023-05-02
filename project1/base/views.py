@@ -74,17 +74,20 @@ def home(request):
         'room_message':room_message,
     }
     return render(request,'base/home.html',context)
+
 def user(request,pk):
     user = User.objects.get(id=pk)
     topics = Topic.objects.all()
     rooms = user.room_set.all()
     room_message = user.message_set.all()
     context = {
+        'user':user,
         'rooms':rooms,
         'topics':topics,
         'room_message':room_message,
     }
     return render(request,'base/user_page.html',context)
+
 def room(req,primarykey):
     room = Room.objects.get(id=primarykey)
     if req.method == 'POST':

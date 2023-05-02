@@ -970,8 +970,7 @@ a {
   background: var(--color-dark);
   z-index: 999;
   top: 4.4rem;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  padding: 1.25rem;
 }
 
 @media screen and (max-width: 500px) {
