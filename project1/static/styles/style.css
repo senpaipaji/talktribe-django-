@@ -49,6 +49,21 @@ body {
   color: var(--color-light-gray);
   background-color: var(--color-bg);
   min-height: 100vh;
+  background: linear-gradient(70deg, hsl(0, 0%, 12%) 70%,hsl(170, 100%, 20%));
+
+  background-size: 100% 100%;
+  /* animation: gradient-animation 8s ease infinite; */
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 img {
