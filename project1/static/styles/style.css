@@ -297,8 +297,8 @@ a {
 }
 
 .header__logo > img {
-  height: 3.2rem;
-  width: 3.2rem;
+  height: 4.2rem;
+  transform: scale(2);
 }
 
 .header__logo > h1 {
