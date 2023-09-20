@@ -43,6 +43,7 @@ html {
 }
 
 body {
+  overflow: hidden;
   line-height: 1.6;
   font-weight: 400;
   font-size: 1.5rem;
@@ -632,7 +633,6 @@ a {
 /*==============================
 =>  Room List
 ================================*/
-
 .roomList__header {
   display: flex;
   justify-content: space-between;
@@ -653,6 +653,10 @@ a {
 }
 
 /*========== Room List Room ==========*/
+.roomListRoom_container{
+  height: 90vh;
+  overflow: scroll;
+}
 
 .roomListRoom {
   margin-bottom: 2.4rem;
@@ -748,6 +752,10 @@ a {
   background: var(--color-dark);
   border-radius: 5px;
   overflow: hidden;
+}
+.activities__container{
+  max-height:90vh;
+  overflow-y: scroll;
 }
 
 .activities__header h2 {
@@ -1175,4 +1183,21 @@ a {
   font-weight: 500;
   color: var(--color-main);
   font-weight: 1.4rem;
+}
+
+
+
+/* ADDONS */
+::-webkit-scrollbar {
+  width: 0; /* Width of the scrollbar */
+  height: 0; /* Height of the scrollbar */
+}
+
+/* Optional: If you want to style the thumb or track */
+::-webkit-scrollbar-thumb {
+  background: transparent; /* Color of the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Color of the track */
 }
