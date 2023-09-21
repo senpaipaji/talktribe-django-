@@ -20,7 +20,7 @@
 
       {% if request.user == message.user %}
       <div class="roomListRoom__actions">
-        <a href="{% url 'delete-message' message.id %}">
+        <a href="{% url 'delete-message' message.id message.room.id %}">
           <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@
             ></path>
           </svg>
         </a>
-      </div>
+      </div> 
       {% endif %}
     </div>
 

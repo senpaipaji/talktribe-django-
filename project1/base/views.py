@@ -103,18 +103,22 @@ def room(req,primarykey):
     context = {
         'room' : room,
         'room_messages':room_messages,
-        'participants':participents
+        'participants':participents,
+        'room_id':primarykey,
     }
     return render(req,'base/room.html',context)
 # Create your views here.
 
 @login_required(login_url="login")
-def delete_message(request,pk):
+def delete_message(request,pk,room_pk):
     message = Message.objects.get(id=pk)
     if request.method == 'POST':
-        message.delete()
-        return redirect('home')
-        
+        try:
+            message.delete()
+            return redirect('room',room_pk)
+        except Exception as e:
+            print(e)
+            return redirect('home')
     return render(request,'base/delete.html',{'obj' : message})
 
 @login_required(login_url="login")

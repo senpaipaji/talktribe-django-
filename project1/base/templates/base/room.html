@@ -83,7 +83,7 @@
             <div class="room__conversation ">
               <div class="threads scroll">
                 {% for message in room_messages %}
-                <div class="thread">
+                <div class="thread {% if request.user == message.user  %}user__message{% endif %}">
                   <div class="thread__top">
                     <div class="thread__author">
                       <a href="{% url 'user' message.user.id %}" class="thread__authorInfo">
@@ -96,7 +96,7 @@
                     </div>
                     {% if request.user == message.user %}
                     <div class="thread__delete">
-                      <a href="{% url 'delete-message' message.id %}">
+                      <a href="{% url 'delete-message' message.id room_id %}">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                           <title>remove</title>
                           <path
@@ -117,6 +117,7 @@
             </div>
           </div>
 
+          {% comment %} Posting a message {% endcomment %}
           {% if request.user.is_authenticated %}
           <div class="room__message">
             <form action="" method="POST">

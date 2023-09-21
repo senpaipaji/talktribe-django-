@@ -9,6 +9,7 @@
   --color-gray: #8B8B8B;
   --color-light-gray: #B2B2B2;
   --color-bg: #262626;
+  --color-bg-lightened: #2c2c2c;
   --color-success: #00FFA3;
   --color-error: #FF006B;
 }
@@ -211,16 +212,6 @@ a {
   height: 1rem;
   bottom: 2px;
   right: 3.5px;
-}
-
-.scroll::-webkit-scrollbar {
-  width: 0.6rem;
-  background-color: rgb(41, 41, 46);
-}
-
-.scroll::-webkit-scrollbar-thumb {
-  border-radius: 1rem;
-  background-color: var(--color-gray);
 }
 
 .dropdown-menu {
@@ -923,10 +914,12 @@ a {
 .room,
 .participants {
   background: var(--color-dark);
-  max-height: 87.5vh;
+  max-height: 83vh;
   border-radius: 0.7rem;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   position: relative;
+  padding-bottom: 30px;
 }
 
 @media screen and (max-width: 900px) {
@@ -986,7 +979,7 @@ a {
 }
 
 .room__header {
-  max-height: 30vh;
+  max-height: 25vh;
   overflow-y: auto;
   position: absolute;
   width: 95%;
@@ -994,6 +987,8 @@ a {
   z-index: 999;
   top: 4.4rem;
   padding: 1.25rem;
+  
+  
 }
 
 @media screen and (max-width: 500px) {
@@ -1007,8 +1002,8 @@ a {
   padding-left: 2rem;
   padding-right: 2rem;
   height: 80.5vh;
+  
   /* overflow-y: auto; */
-  padding-bottom: 0;
 }
 
 @media screen and (max-width: 500px) {
@@ -1065,7 +1060,8 @@ a {
 .room__conversation {
   margin-top: 1rem;
   margin-bottom: 4rem;
-  height: 64%;
+  height: 50%;
+  
 }
 
 .threads h3 {
@@ -1077,6 +1073,7 @@ a {
 .threads {
   background: var(--color-bg);
   border-radius: 0.7rem;
+  box-shadow: rgba(0, 0, 0, 0.546) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
   overflow-y: auto;
   height: 100%;
   margin-top: 28vh;
@@ -1084,10 +1081,15 @@ a {
 }
 
 .thread {
+  background-color: var(--color-bg-lightened);
   border-left: 2px solid var(--color-dark);
   padding-left: 1rem;
   margin: 2rem 0;
   padding: 2rem;
+}
+
+.thread.user__message{
+  border-left: 2px solid var(--color-main);
 }
 
 .thread__top {
@@ -1126,6 +1128,10 @@ a {
   left: 0;
   right: 0;
   background: transparent;
+}
+
+.room__message > form{
+  border: 10px solid var(--color-bg);
 }
 
 .room__message > form > input {
