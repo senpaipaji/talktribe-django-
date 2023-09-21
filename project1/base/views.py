@@ -3,13 +3,12 @@ from django.contrib import messages
 from django.contrib import auth #NOTE for autharisation
 from django.db.models import Q 
 from django.http import HttpResponse
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-
 from .models import *
 from .forms import *
-
+from .content_filtering import isValid
+import asyncio
 def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username').lower()
@@ -89,15 +88,28 @@ def user(request,pk):
     return render(request,'base/user_page.html',context)
 
 def room(req,primarykey):
+    flag = None
     room = Room.objects.get(id=primarykey)
     if req.method == 'POST':
+        message_text = req.POST.get('message')
         message= Message.objects.create(
             user=req.user,
             room=room,
-            body=req.POST.get('message'),
+            body=message_text,
         )
-        room.participants.add(req.user)
+        valid,flag = (isValid(message.body))
+        if not valid:
+            message.delete()
+            req.session['flag'] = flag
+            req.session.save()
+            print("flag saved")
+        else:
+            room.participants.add(req.user)
         return redirect('room',primarykey)
+    if 'flag' in req.session:
+        flag = req.session.pop('flag') 
+        print("flag removed")
+    print(flag)
     room_messages = room.message_set.all().order_by('-created')  
     participents = room.participants.all()
     context = {
@@ -105,9 +117,9 @@ def room(req,primarykey):
         'room_messages':room_messages,
         'participants':participents,
         'room_id':primarykey,
+        'flag':flag
     }
     return render(req,'base/room.html',context)
-# Create your views here.
 
 @login_required(login_url="login")
 def delete_message(request,pk,room_pk):

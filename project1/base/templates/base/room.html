@@ -151,3 +151,17 @@
       </div>
     </main>
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+
+    window.onload = function() {
+      let flag_value = '{{ flag }}'; // Make sure there are spaces around '{{' and '}}'
+      console.log(flag_value);
+      if (flag_value !== 'None') {
+          alert("Message removed for being " + flag_value);
+      }
+    };
+  
+  </script>
+{% endblock scripts %}
